@@ -1,0 +1,17 @@
+version: '3'
+services:
+  spark-master:
+    image: bitnami/spark
+    environment:
+      - SPARK_MODE=master
+    ports:
+      - "8081:8081"  # Web UI
+      - "7077:7077"  # Spark master port
+
+  spark-worker:
+    image: bitnami/spark
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    depends_on:
+      - spark-master
